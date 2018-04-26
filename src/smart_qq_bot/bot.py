@@ -23,7 +23,7 @@ def unescape_json_response(s):
 
 from smart_qq_bot.logger import logger
 from smart_qq_bot.config import QR_CODE_PATH, SMART_QQ_REFER
-from smart_qq_bot.http_client import HttpClient
+from smart_qq_bot.http_client import HttpClient, ChromeClient
 from smart_qq_bot.excpetions import NeedRelogin
 from smart_qq_bot.messages import (
     QMessage,
@@ -329,6 +329,11 @@ class QQBot(object):
             logger.debug("QR Login redirect_url response: %s" % html)
             return True
 
+    def _login_by_password(self, no_gui):
+        logger.info("RUNTIMELOG Trying to login by password.")
+        chrome = ChromeClient(no_gui)
+        return chrome.login()
+
     def _hash_for_qrsig(self, qrsig):
         e = 0
         for i in qrsig:
@@ -358,13 +363,17 @@ class QQBot(object):
             redirect_url = redirect_info[0]
         return ret_code, redirect_url
 
-    def login(self, no_gui=False):
+    def login(self, no_gui=False, password=False):
         try:
             self._login_by_cookie()
         except CookieLoginFailed as e:
             logger.exception(e)
             while True:
-                if self._login_by_qrcode(no_gui):
+                if password:
+                    if self._login_by_password(no_gui):
+                        if self._login_by_cookie():
+                            break
+                elif self._login_by_qrcode(no_gui):
                     if self._login_by_cookie():
                         break
                 time.sleep(4)

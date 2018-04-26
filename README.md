@@ -13,7 +13,7 @@ SmartQQBot
 + `bottle` （可选）
 
 ## 快速开始
-+ 安装Python \> 2.6 / Python \>= 3(tested on 3.4)
++ Python \>= 3(tested on 3.6)
 + 手动安装依赖`pip install Pillow six requests` 或者在命令行运行`python setup.py develop`
 + 如果需要启用web界面登录，请`pip install bottle`
 + 命令行运行 `python run.py`

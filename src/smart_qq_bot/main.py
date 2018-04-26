@@ -6,9 +6,6 @@ import socket
 import sys
 import threading
 
-from six import PY2
-from six import iteritems
-
 from smart_qq_bot.config import COOKIE_FILE
 from smart_qq_bot.logger import logger
 from smart_qq_bot.app import bot, plugin_manager
@@ -16,12 +13,6 @@ from smart_qq_bot.handler import MessageObserver
 from smart_qq_bot.messages import mk_msg
 from smart_qq_bot.excpetions import ServerResponseEmpty, NeedRelogin
 from smart_qq_bot.signals import bot_inited_registry
-
-
-def patch():
-    if PY2:
-        reload(sys)
-        sys.setdefaultencoding("utf-8")
 
 
 def clean_cookie():
@@ -41,8 +32,7 @@ def run_http_daemon(host="0.0.0.0", port=8888):
     daemon.start()
 
 
-def main_loop(no_gui=False, new_user=False, debug=False, http=False):
-    patch()
+def main_loop(no_gui=False, new_user=False, debug=False, http=False, password=False):
     if debug:
         logger.setLevel(logging.DEBUG)
     else:
@@ -53,10 +43,10 @@ def main_loop(no_gui=False, new_user=False, debug=False, http=False):
     plugin_manager.load_plugin()
     if new_user:
         clean_cookie()
-    bot.login(no_gui)
+    bot.login(no_gui, password)
     observer = MessageObserver(bot)
 
-    for name, func in iteritems(bot_inited_registry):
+    for name, func in bot_inited_registry.items():
         try:
             t = threading.Thread(target=func, args=(bot,))
             t.daemon = True
@@ -107,6 +97,12 @@ def run():
         action="store_true",
         default=False,
         help="Switch to DEBUG mode for better view of requests and responses."
+    )
+    parser.add_argument(
+        "--password",
+        action="store_true",
+        default=False,
+        help="Whether use password login."
     )
     args = parser.parse_args()
     main_loop(**vars(args))
