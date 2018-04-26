@@ -26,6 +26,8 @@ def do_inactivate(text):
     re.findall(cmd_inactivate, text)
     result = re.findall(cmd_inactivate, text)
     if result:
+        if result[0] == 'PluginManager[manage_tools]':
+            return "Function [%s] cannot be inactivated" % result[0]
         inactivate(result[0])
         return "Function [%s] inactivated successfully" % result[0]
 
