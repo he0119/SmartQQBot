@@ -16,14 +16,14 @@ recorder = Recorder()
 
 
 def is_repeat(recorder, msg):
-    if msg.src_group_name != '诶嘿':
+    if msg.src_group_name != '圆环之理':
         return False
     #[群消息]blabla
     match = re.match(r'^\[\w+\]\w+', msg.content)
     if match:
         return False
     rand = randint(1, 100)
-    logger.info(rand)
+    logger.debug(rand)
     if rand > 15:
         return False
     time = recorder.last_message_on
