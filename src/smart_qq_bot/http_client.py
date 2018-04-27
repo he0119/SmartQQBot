@@ -181,7 +181,7 @@ class ChromeClient(object):
                 distance = 195
                 offset = 5
                 times = 0
-                while 1:
+                while True:
                     action = ActionChains(self._driver)
                     action.click_and_hold(button).perform()
                     action.reset_actions()  # 清除之前的action
@@ -220,6 +220,8 @@ class ChromeClient(object):
             self._driver.switch_to_frame('ptlogin')
             time.sleep(2)
             wait.until(EC.element_to_be_clickable((By.CLASS_NAME, 'face'))).click()
+            time.sleep(2)
+            wait.until(EC.element_to_be_clickable((By.CLASS_NAME, 'face'))).click()
         except:
             pass
 
@@ -235,17 +237,6 @@ class ChromeClient(object):
         for item in self._driver.get_cookies():
             session.cookies.set(item['name'], item['value'])
 
-        # self._driver.get('http://web2.qq.com')
-        # wait.until(EC.presence_of_element_located(
-        #     (By.CLASS_NAME, 'main-panel')))
-        # self._driver.get('http://web2.qq.com')
-        # wait.until(EC.presence_of_element_located(
-        #     (By.CLASS_NAME, 'main-panel')))
-        # self._driver.get('http://web2.qq.com')
-        # wait.until(EC.presence_of_element_located(
-        #     (By.CLASS_NAME, 'main-panel')))
-        # time.sleep(2)
-
         session.cookies.set(
             'ptwebqq', self._driver.execute_script('return mq.ptwebqq'))
         session.cookies.set(
@@ -253,7 +244,26 @@ class ChromeClient(object):
         session.cookies.set(
             'psessionid', self._driver.execute_script('return mq.psessionid'))
 
-        logger.info(session.cookies)
+        #登陆qun.qq.com
+        # self._driver.get('http://qun.qq.com/')
+        # wait.until(EC.element_to_be_clickable((By.CLASS_NAME, 'user-info'))).click()
+        # time.sleep(2)
+        # self._driver.switch_to_frame('login_frame')
+        # time.sleep(2)
+        # wait.until(EC.element_to_be_clickable(
+        #     (By.ID, 'switcher_plogin'))).click()
+        # wait.until(EC.presence_of_element_located((By.ID, "login_button")))
+        # self._driver.find_element_by_id('u').clear()
+        # self._driver.find_element_by_id('u').send_keys(self.config[QQ])
+        # self._driver.find_element_by_id('p').clear()
+        # self._driver.find_element_by_id('p').send_keys(self.config[PASSWORD])
+        # self._driver.find_element_by_id('login_button').click()
+
+        # time.sleep(10)
+        # for item in self._driver.get_cookies():
+        #     session.cookies.set(item['name'], item['value'])
+
+        logger.debug(session.cookies)
         requests.utils.cookiejar_from_dict(
             {c.name: c.value for c in session.cookies}, self._cookies)
         self._driver.close()

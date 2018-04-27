@@ -101,12 +101,12 @@ class GroupMsg(QMessage):
             group_name = info.get('name')
             return group_name
 
-    @property
-    def src_group_id(self):
-        info = self.bot.get_group_info(str(self.group_code))
-        if info:
-            group_id = info.get('id')
-            return group_id
+    # @property
+    # def src_group_id(self):
+    #     info = self.bot.get_group_info(str(self.group_code))
+    #     if info:
+    #         group_id = info.get('id')
+    #         return group_id
 
     @property
     def src_sender_card(self):
@@ -137,22 +137,22 @@ class GroupMsg(QMessage):
         #         return tmp.get('n', "")
         # return ""
 
-    @property
-    def src_sender_id(self):
-        """
-        获取发送者真实QQ号
-        """
-        result_list = []
-        member_list = self.bot.search_group_members(self.src_group_id)
-        target_info = self.bot.get_group_member_info(str(self.group_code), self.send_uin)
-        for info in member_list:
-            if info.get('n') == target_info.get('nick'):
-                result_list.append(str(info.get('u')))
-        if len(result_list) > 1:
-            raise IndexError('群内含有相同昵称的成员,获取真实QQ号失败')
-        if len(result_list) == 0:
-            return ""
-        return result_list[0]
+    # @property
+    # def src_sender_id(self):
+    #     """
+    #     获取发送者真实QQ号
+    #     """
+    #     result_list = []
+    #     member_list = self.bot.search_group_members(self.src_group_id)
+    #     target_info = self.bot.get_group_member_info(str(self.group_code), self.send_uin)
+    #     for info in member_list:
+    #         if info.get('n') == target_info.get('nick'):
+    #             result_list.append(str(info.get('u')))
+    #     if len(result_list) > 1:
+    #         raise IndexError('群内含有相同昵称的成员,获取真实QQ号失败')
+    #     if len(result_list) == 0:
+    #         return ""
+    #     return result_list[0]
         # qq_info = self.bot.get_group_member_info(str(self.group_code), self.send_uin)
 
         # return str(qq_info.get('nick'))

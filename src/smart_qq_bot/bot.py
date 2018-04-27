@@ -821,28 +821,28 @@ class QQBot(object):
         if group_code or group_id:
             if group_code:
                 assert isinstance(group_code, str), "group_code类型错误, 应该为str"
-                t_group_code = self.get_true_group_code(group_code)
-                if t_group_code not in self.group_code_list and group_code not in self.group_code_list:
+                # t_group_code = self.get_true_group_code(group_code)
+                if group_code not in self.group_code_list:
                     self.get_group_list_with_group_code()
-                group_code_info = self.group_code_list.get(t_group_code) or self.group_code_list.get(group_code)
+                group_code_info = self.group_code_list.get(group_code)
 
-                group_id_list = self.get_group_list_with_group_id()
+                # group_id_list = self.get_group_list_with_group_id()
                 result = {
                     'name':         group_code_info['name'] or "",
                     'id':           0,
                     'group_code':   group_code_info['code'] or 0
                 }
-                name = group_code_info['name']
-                group_id_list = [x for x in group_id_list if x['gn'] == name]
-                if len(group_id_list) == 1:
-                    result['id'] = group_id_list[0].get('gc')
-                    return result
-                elif len(group_id_list) > 1:
-                    raise KeyError('QQ{qq}的群列表中含有{count}个同名群:"{group_name}"'.format(
-                        qq=self.account,
-                        count=len(group_id_list),
-                        group_name=group_code_info['name']
-                    ))
+                # name = group_code_info['name']
+                # group_id_list = [x for x in group_id_list if x['gn'] == name]
+                # if len(group_id_list) == 1:
+                #     result['id'] = group_id_list[0].get('gc')
+                return result
+                # elif len(group_id_list) > 1:
+                #     raise KeyError('QQ{qq}的群列表中含有{count}个同名群:"{group_name}"'.format(
+                #         qq=self.account,
+                #         count=len(group_id_list),
+                #         group_name=group_code_info['name']
+                #     ))
             elif group_id:
                 assert isinstance(group_id, str), "group_id类型错误, 应该为str"
                 if group_id not in self.group_id_list:
