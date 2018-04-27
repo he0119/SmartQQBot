@@ -1,13 +1,10 @@
-# coding: utf-8
 import re
-from smart_qq_bot.handler import (
-    list_handlers,
-    list_active_handlers,
-    activate,
-    inactivate,
-)
+
+from smart_qq_bot.handler import (activate, inactivate, list_active_handlers,
+                                  list_handlers)
 from smart_qq_bot.logger import logger
-from smart_qq_bot.signals import on_all_message, on_bot_inited, on_private_message
+from smart_qq_bot.signals import (on_all_message, on_bot_inited,
+                                  on_private_message)
 
 cmd_hello = re.compile(r"!hello")
 cmd_list_plugin = re.compile(r"!list_plugin")
@@ -34,15 +31,17 @@ def do_inactivate(text):
 
 def do_hello(text):
     if re.match(cmd_hello, text):
-        return "喵帕斯!"
+        return "å–µå¸•æ–¯!"
 
 
 def do_list_plugin(text):
     if re.match(cmd_list_plugin, text):
         text = "All: %s\n\nActive: %s" % (
-            ", ".join(list(list_handlers())), ", ".join(list(list_active_handlers()))
+            ", ".join(list(list_handlers())), ", ".join(
+                list(list_active_handlers()))
         )
         return text
+
 
 @on_bot_inited("PluginManager")
 def manager_init(bot):
