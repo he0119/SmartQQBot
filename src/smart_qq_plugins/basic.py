@@ -22,6 +22,10 @@ def is_repeat(recorder, msg):
     match = re.match(r'^\[\w+\]\w+', msg.content)
     if match:
         return False
+    #不要复读指令
+    match = re.match(r'^\/|!', msg.content)
+    if match:
+        return False
     rand = randint(1, 100)
     logger.debug(rand)
     if rand > 15:
