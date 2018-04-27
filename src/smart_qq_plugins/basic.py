@@ -36,10 +36,8 @@ def is_repeat(recorder, msg):
 @on_group_message(name='basic[人类本质]')
 def repeat(msg, bot):
     global recorder
-    reply = bot.reply_msg(msg, return_function=True)
-    logger.debug(msg)
     if is_repeat(recorder, msg):
-        reply(msg.content)
+        bot.reply_msg(msg, msg.content)
 
 
 @on_group_message(name='basic[三个问题]')

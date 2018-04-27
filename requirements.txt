@@ -1,0 +1,6 @@
+selenium==3.11.0
+setuptools==39.0.1
+six==1.11.0
+requests==2.18.4
+Pillow==5.1.0
+bottle==0.12.13
