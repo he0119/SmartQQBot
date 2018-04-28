@@ -31,7 +31,7 @@ def do_inactivate(text):
 
 def do_hello(text):
     if re.match(cmd_hello, text):
-        return "å–µå¸•æ–¯!"
+        return "喵帕斯!"
 
 
 def do_list_plugin(text):
