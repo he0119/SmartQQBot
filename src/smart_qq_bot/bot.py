@@ -428,7 +428,8 @@ class QQBot(object):
                     }
                 )
             },
-            SMART_QQ_REFER
+            SMART_QQ_REFER,
+            timeout=10
         )
         logger.debug("Pooling returns response: %s" % response)
         if response == "":

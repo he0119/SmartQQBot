@@ -65,7 +65,7 @@ def main_loop(no_gui=False, new_user=False, debug=False, http=False, password=Fa
         except ServerResponseEmpty:
             continue
         except (socket.timeout, IOError):
-            logger.warning("Message pooling timeout, retrying...")
+            logger.debug("Message pooling timeout, retrying...")
         except NeedRelogin:
             exit(0)
         except Exception:

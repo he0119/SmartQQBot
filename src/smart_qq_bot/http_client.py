@@ -84,13 +84,14 @@ class HttpClient(object):
             self._cookies.save(COOKIE_FILE, ignore_discard=True, ignore_expires=True)
             return resp.text
 
-    def post(self, url, data, refer=None):
+    def post(self, url, data, refer=None, timeout=None):
         try:
             resp = self.session.post(
                 url,
                 data,
                 headers=self._get_headers({'Referer': refer or SMART_QQ_REFER}),
                 verify=SSL_VERIFY,
+                timeout=timeout,
             )
         except requests.exceptions.SSLError:
             logger.exception("SSL连接验证失败，请检查您所在的网络环境。如果需要禁用SSL验证，请修改config.py中的SSL_VERIFY为False")
